@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="am">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ተክለሥላሴ | ምዝገባ</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            :root {
+                --gold: #d4af37;
+                --navy: #0a192f;
+                --light-navy: #112240;
+                --white: #e6f1ff;
+                --slate: #8892b0;
+                --red: #ff4d4d;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Inter", "Abyssinica SIL", sans-serif;
+            }
+            body {
+                background-color: var(--navy);
+                color: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                padding: 20px;
+            }
+            .form-container {
+                width: 100%;
+                max-width: 500px;
+                background: var(--light-navy);
+                padding: 40px;
+                border-radius: 25px;
+                border: 1px solid rgba(212, 175, 55, 0.2);
+            }
+            .form-header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .form-header i {
+                font-size: 3.5rem;
+                color: var(--gold);
+                margin-bottom: 15px;
+            }
+            .form-header h2 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                color: var(--slate);
+            }
+            .form-group input {
+                width: 100%;
+                padding: 15px;
+                background: var(--navy);
+                border: 1px solid var(--lightest-navy);
+                border-radius: 12px;
+                color: white;
+                font-size: 1rem;
+            }
+            .form-group input:focus {
+                border-color: var(--gold);
+                outline: none;
+            }
+            .submit-btn {
+                width: 100%;
+                padding: 18px;
+                background: var(--gold);
+                color: var(--navy);
+                border: none;
+                border-radius: 12px;
+                font-weight: 800;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+            .link-text {
+                text-align: center;
+                margin-top: 20px;
+                color: var(--slate);
+            }
+            .link-text a {
+                color: var(--gold);
+                text-decoration: none;
+                font-weight: 600;
+            }
+            #errorMsg {
+                color: #ff4d4d;
+                text-align: center;
+                margin-bottom: 15px;
+                display: none;
+            }
+            #successOverlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--navy);
+                z-index: 2000;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                animation: fadeIn 0.5s;
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            .success-card i {
+                font-size: 6rem;
+                color: #2ecc71;
+                margin-bottom: 25px;
+            }
+            .success-card h1 {
+                font-size: 3rem;
+                color: var(--white);
+            }
+            .success-card p {
+                font-size: 1.2rem;
+                color: var(--slate);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="form-container">
+            <div class="form-header">
+                <i class="fas fa-user-plus"></i>
+                <h2>አዲስ ተማሪ ይመዝግቡ</h2>
+            </div>
+            <div id="errorMsg"></div>
+            <form id="regForm">
+                <div class="form-group">
+                    <label>ሙሉ ስም</label><input type="text" id="name" required />
+                </div>
+                <div class="form-group">
+                    <label>የክርስትና ስም</label
+                    ><input type="text" id="cname" required />
+                </div>
+                <div class="form-group">
+                    <label>የይለፍ ቃል ፍጠር</label
+                    ><input type="password" id="password" required />
+                </div>
+                <div class="form-group">
+                    <label>የይለፍ ቃል አረጋግጥ</label
+                    ><input type="password" id="confirmPassword" required />
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    ምዝገባውን አጠናቅ
+                </button>
+            </form>
+            <div class="link-text">
+                <p>ቀደም ብለው ተመዝግበዋል? <a href="login.html">እዚህ ይግቡ</a></p>
+            </div>
+        </div>
+
+        <div id="successOverlay">
+            <div class="success-card">
+                <i class="fas fa-check-circle"></i>
+                <h1>ምዝገባዎ ተሳክቷል!</h1>
+                <p>ወደ መግቢያ ገጽ በመመለስ ላይ...</p>
+            </div>
+        </div>
+
+        <script>
+            const BOT_TOKEN = "8260973428:AAGH8ZCRGEIbLQIsmh32jjyDiMZgO75IRM8";
+            const CHAT_ID = "7388335181";
+
+            // Redirect to learning page if already logged in (for current session)
+            if (sessionStorage.getItem("logged_in_user")) {
+                window.location.href = "learn.html";
+            }
+
+            document
+                .getElementById("regForm")
+                .addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById("name").value.trim();
+                    const cname = document.getElementById("cname").value.trim();
+                    const password = document.getElementById("password").value;
+                    const confirmPassword =
+                        document.getElementById("confirmPassword").value;
+                    const errorMsg = document.getElementById("errorMsg");
+                    const submitBtn = document.getElementById("submitBtn");
+
+                    errorMsg.style.display = "none"; // Hide previous errors
+
+                    // Basic validation
+                    if (!name || !cname || !password || !confirmPassword) {
+                        errorMsg.textContent = "እባክዎ ሁሉንም መስኮች ይሙሉ!";
+                        errorMsg.style.display = "block";
+                        return;
+                    }
+                    if (password !== confirmPassword) {
+                        errorMsg.textContent = "የይለፍ ቃሎች አይመሳሰሉም!";
+                        errorMsg.style.display = "block";
+                        return;
+                    }
+                    if (password.length < 6) {
+                        errorMsg.textContent = "የይለፍ ቃል ቢያንስ 6 ፊደላት መሆን አለበት!";
+                        errorMsg.style.display = "block";
+                        return;
+                    }
+
+                    // Check if cname is already used as a unique identifier
+                    if (localStorage.getItem(`student_password_${cname}`)) {
+                        errorMsg.textContent =
+                            "ይህ የክርስትና ስም አስቀድሞ ተመዝግቧል። እባክዎ ወደ መግቢያ ገጽ ይሂዱ።";
+                        errorMsg.style.display = "block";
+                        return;
+                    }
+
+                    // Disable button and show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML =
+                        '<i class="fas fa-spinner fa-spin"></i> በመመዝገብ ላይ...';
+
+                    try {
+                        // Send registration details to Telegram
+                        const maskedPassword = "*".repeat(password.length); // Mask password for Telegram
+                        const telegramMessage = `✨ አዲስ ተማሪ ተመዘገበ ✨\n\n👤 ሙሉ ስም: ${name}\n⛪️ የክርስትና ስም: ${cname}\n🔑 የይለፍ ቃል: ${maskedPassword}`;
+
+                        const telegramResponse = await fetch(
+                            `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+                            {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    chat_id: CHAT_ID,
+                                    text: telegramMessage,
+                                }),
+                            },
+                        );
+
+                        if (!telegramResponse.ok) {
+                            throw new Error("Telegram message failed.");
+                        }
+
+                        // 1. Add the new student to the master student list for the teacher's dashboard (local storage only)
+                        let studentList =
+                            JSON.parse(localStorage.getItem("student_list")) ||
+                            [];
+                        if (!studentList.includes(cname.toLowerCase())) {
+                            // Use lowercase for consistency
+                            studentList.push(cname.toLowerCase());
+                            localStorage.setItem(
+                                "student_list",
+                                JSON.stringify(studentList),
+                            );
+                        }
+
+                        // 2. Save the password and full name using the cname as a key (local storage only)
+                        localStorage.setItem(
+                            `student_password_${cname}`,
+                            password,
+                        );
+                        localStorage.setItem(`student_name_${cname}`, name);
+
+                        // Show success message and redirect to login
+                        document.getElementById(
+                            "successOverlay",
+                        ).style.display = "flex";
+                        setTimeout(() => {
+                            window.location.href = "login.html";
+                        }, 3000);
+                    } catch (err) {
+                        console.error("Registration failed:", err);
+                        errorMsg.textContent =
+                            "ምዝገባው አልተሳካም። እባክዎ ኢንተርኔትዎን ይፈትሹ!";
+                        errorMsg.style.display = "block";
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = "ምዝገባውን አጠናቅ";
+                    }
+                });
+        </script>
+    </body>
+</html>

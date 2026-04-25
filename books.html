@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="am">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>የመጽሐፍት ክፍል | ተክለሥላሴ</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+
+        <style>
+            :root {
+                --gold: #d4af37;
+                --navy: #0a192f;
+                --light-navy: #172a45;
+                --white: #ffffff;
+                --slate: #8892b0;
+                --accent: #64ffda;
+                --transition: all 0.3s ease;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", "Abyssinica SIL", sans-serif;
+            }
+            body {
+                background-color: var(--navy);
+                color: var(--white);
+                line-height: 1.6;
+            }
+            /* Navbar */
+            .navbar {
+                position: sticky;
+                top: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 8%;
+                background: rgba(10, 25, 47, 0.9);
+                backdrop-filter: blur(10px);
+                z-index: 1000;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                color: var(--white);
+                font-size: 1.5rem;
+                font-weight: bold;
+                text-decoration: none;
+            }
+            .logo img {
+                height: 45px;
+                width: 45px;
+                border-radius: 50%;
+                border: 2px solid var(--gold);
+            }
+            .logo span span {
+                color: var(--gold);
+            } /* Correctly targets the inner span */
+            .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+            .nav-link {
+                color: var(--white);
+                text-decoration: none;
+                font-weight: 500;
+                transition: var(--transition);
+            }
+            .nav-link:hover {
+                color: var(--gold);
+            }
+
+            /* Main Library Container */
+            .library-container {
+                min-height: 100vh;
+                padding: 40px 8%;
+                background:
+                    linear-gradient(
+                        rgba(10, 25, 47, 0.9),
+                        rgba(10, 25, 47, 0.95)
+                    ),
+                    url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=2070");
+                background-size: cover;
+                background-attachment: fixed;
+            }
+            .page-header {
+                text-align: center;
+                margin-bottom: 50px;
+            }
+            .page-header h1 {
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                color: var(--gold);
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+            }
+            .page-header p {
+                font-size: 1.1rem;
+                color: var(--slate);
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            /* Books Grid Layout */
+            .books-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            .book-card {
+                background: rgba(17, 34, 64, 0.7);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                padding: 30px;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                text-align: center;
+                transition: var(--transition);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .book-card:hover {
+                transform: translateY(-10px);
+                border-color: var(--gold);
+            }
+            .book-icon {
+                font-size: 3rem;
+                color: var(--accent);
+                margin-bottom: 20px;
+            }
+            .book-card h3 {
+                font-size: 1.5rem;
+                color: var(--white);
+                margin-bottom: 10px;
+            }
+            .book-card p {
+                color: var(--slate);
+                margin-bottom: 25px;
+                flex-grow: 1;
+            }
+            .action-buttons {
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+            }
+            .btn {
+                padding: 10px 25px;
+                border-radius: 50px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 1rem;
+                transition: var(--transition);
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                border: 2px solid transparent;
+            }
+            .btn-primary {
+                background-color: var(--gold);
+                color: var(--navy);
+            }
+            .btn-primary:hover {
+                background-color: #e5be45;
+                box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            }
+            .btn-secondary {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+            .btn-secondary:hover {
+                background-color: var(--accent);
+                color: var(--navy);
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="pawlos.png" alt="ሎጎ" />
+                <span>ተክለ<span>ሥላሴ</span></span>
+            </a>
+            <div class="nav-right">
+                <a href="home.html" class="nav-link">የመማሪያ ክፍል</a>
+                <a href="index.html" class="nav-link">ዋና ገጽ</a>
+            </div>
+        </nav>
+
+        <main class="library-container">
+            <div class="page-header">
+                <h1><i class="fas fa-book-atlas"></i> የመጽሐፍት ክፍል</h1>
+                <p>የተለያዩ መንፈሳዊ መጽሐፍትን እና የትምህርት ማቴሪያሎችን እዚህ ያገኛሉ።</p>
+            </div>
+
+            <div class="books-grid">
+                <!-- Book 1: Geez -->
+                <div class="book-card">
+                    <div>
+                        <div class="book-icon">
+                            <i class="fas fa-pen-nib"></i>
+                        </div>
+                        <h3>የግእዝ ቋንቋ ትምህርት</h3>
+                        <p>
+                            የቤተክርስቲያናችን ጥንታዊ ልሳን የሆነውን የግእዝ ቋንቋ መሠረታዊያን በቀላሉ
+                            ይማሩ።
+                        </p>
+                    </div>
+                    <div class="action-buttons">
+                        <a
+                            href="geez.pdf"
+                            target="_blank"
+                            class="btn btn-primary"
+                            ><i class="fas fa-book-open"></i> ክፈት</a
+                        >
+                        <a href="geez.pdf" download class="btn btn-secondary"
+                            ><i class="fas fa-download"></i> አውርድ</a
+                        >
+                    </div>
+                </div>
+
+                <!-- Book 2: Church History -->
+                <div class="book-card">
+                    <div>
+                        <div class="book-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>የቤተክርስቲያን ታሪክ</h3>
+                        <p>
+                            የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተክርስቲያንን ታላቅ ታሪክ ከጅማሬው እስከ ዛሬ
+                            ድረስ ይቃኙ።
+                        </p>
+                    </div>
+                    <div class="action-buttons">
+                        <a
+                            href="sreat.pdf"
+                            target="_blank"
+                            class="btn btn-primary"
+                            ><i class="fas fa-book-open"></i> ክፈት</a
+                        >
+                        <a href="sreat.pdf" download class="btn btn-secondary"
+                            ><i class="fas fa-download"></i> አውርድ</a
+                        >
+                    </div>
+                </div>
+
+                <!-- Book 3: Scriptures Study -->
+                <div class="book-card">
+                    <div>
+                        <div class="book-icon">
+                            <i class="fas fa-torah"></i>
+                        </div>
+                        <h3>የቅዱሳት መጻሕፍት ጥናት</h3>
+                        <p>
+                            የብሉይ እና የሐዲስ ኪዳን መጻሕፍትን በጥልቀት በማጥናት መንፈሳዊ ሕይወትዎን
+                            ያሳድጉ።
+                        </p>
+                    </div>
+                    <div class="action-buttons">
+                        <a
+                            href="kidu.pdf"
+                            target="_blank"
+                            class="btn btn-primary"
+                            ><i class="fas fa-book-open"></i> ክፈት</a
+                        >
+                        <a href="kidu.pdf" download class="btn btn-secondary"
+                            ><i class="fas fa-download"></i> አውርድ</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="am">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>የምስክር ወረቀት | ተክለሥላሴ</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Poppins:wght@400;600&display=swap");
+
+            /* --- SCREEN STYLES (NO CHANGE) --- */
+            body {
+                background-color: #3d2c21;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                padding: 40px 20px;
+                font-family: "Poppins", "Segoe UI", sans-serif;
+                box-sizing: border-box;
+            }
+
+            .action-container {
+                margin-bottom: 25px;
+                width: 100%;
+                max-width: 1000px;
+                display: flex;
+                justify-content: flex-end;
+                gap: 15px;
+            }
+
+            .action-btn {
+                background: #d4af37;
+                color: #4e342e;
+                padding: 12px 28px;
+                border: none;
+                border-radius: 50px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+                transition: all 0.3s ease;
+            }
+
+            .action-btn:hover {
+                transform: translateY(-3px);
+                filter: brightness(1.1);
+            }
+
+            .certificate-wrapper {
+                background: #f5eadd;
+                width: 100%;
+                max-width: 1000px;
+                position: relative;
+                box-sizing: border-box;
+                text-align: center;
+                padding: 40px;
+                border: 15px solid #5d4037;
+                box-shadow:
+                    0 0 0 5px #d4af37,
+                    0 15px 40px rgba(0, 0, 0, 0.4);
+            }
+
+            .cert-logo {
+                width: clamp(90px, 15vw, 120px);
+                height: clamp(90px, 15vw, 120px);
+                margin: 10px auto 15px;
+                background: #5d4037;
+                border: 4px solid #d4af37;
+                border-radius: 50%;
+                padding: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                object-fit: contain;
+            }
+
+            .cert-header,
+            .cert-title,
+            .cert-text,
+            .student-name,
+            .course-name,
+            .score-label,
+            .score-value,
+            .signature-line,
+            .signature-text {
+                color: #5d4037; /* Default text color */
+            }
+
+            .cert-header {
+                color: #c09440;
+                font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+                font-weight: 800;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                margin-bottom: 5px;
+            }
+            .cert-title {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(2.5rem, 6vw, 4.2rem);
+                color: #b8860b;
+                margin: 5px 0 20px;
+                font-weight: 800;
+            }
+            .cert-text {
+                font-size: clamp(0.95rem, 2vw, 1.2rem);
+                color: #6d4c41;
+                line-height: 1.8;
+                margin: 0 auto;
+                max-width: 85%;
+            }
+            .student-name {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                color: #b8860b;
+                font-weight: 800;
+                margin: 20px auto;
+                border-bottom: 2px solid #d4af37;
+                display: inline-block;
+                padding: 0 5% 10px;
+            }
+            .course-name {
+                font-weight: 800;
+                background: rgba(212, 175, 55, 0.2);
+                padding: 2px 10px;
+                border-radius: 6px;
+            }
+            .score-board {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                margin: 35px auto;
+                max-width: 85%;
+            }
+            .score-card {
+                background: transparent;
+                border: 2px solid #b8860b;
+                border-radius: 15px;
+                padding: 15px 25px;
+                min-width: 150px;
+            }
+            .score-card.total {
+                background: #5d4037;
+                border-color: #d4af37;
+            }
+            .score-card.total .score-label,
+            .score-card.total .score-value {
+                color: #fff;
+            }
+            .score-label {
+                display: block;
+                font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+                margin-bottom: 8px;
+                font-weight: 600;
+            }
+            .score-value {
+                font-size: clamp(1.4rem, 3vw, 1.8rem);
+                font-weight: 800;
+            }
+            .footer {
+                margin-top: 40px;
+                display: flex;
+                justify-content: center;
+            }
+            .signature-box {
+                text-align: center;
+                width: clamp(180px, 40vw, 300px);
+            }
+            .signature-line {
+                border-bottom: 2px solid #d4af37;
+                height: 30px;
+                margin-bottom: 10px;
+                font-size: clamp(1rem, 2vw, 1.3rem);
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                padding-bottom: 5px;
+            }
+            .signature-text {
+                color: #c09440;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+
+            /* === አዲሱና የተሻሻለው የህትመት ክፍል === */
+            @media print {
+                /* የገጹን ህዳግ (margin) ሙሉ በሙሉ ማጥፋት */
+                @page {
+                    size: A4;
+                    margin: 0;
+                }
+
+                html,
+                body {
+                    width: 100%;
+                    height: 100%;
+                    background: #fff;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .action-container {
+                    display: none;
+                }
+
+                .certificate-wrapper {
+                    width: auto; /* ስፋቱ እንደ ይዘቱ ይሁን */
+                    max-width: 98vw; /* ከገጹ ስፋት 98% አይብለጥ */
+                    max-height: 95vh; /* ከገጹ ቁመት 95% አይብለጥ */
+                    padding: 20px; /* በህትመት ጊዜ ፓዲንግ መቀነስ */
+                    margin: auto;
+                    box-shadow: none !important;
+                    transform: scale(1); /* ልኬቱን ወደ መጀመሪያው መመለስ */
+
+                    /* የጀርባ ቀለሞችና ምስሎች እንዲታተሙ ማስገደድ */
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="action-container">
+            <button class="action-btn" id="downloadBtn">
+                <i class="fas fa-download"></i> በምስል አውርድ
+            </button>
+            <button class="action-btn" id="printBtn">
+                <i class="fas fa-print"></i> ፕሪንት አድርግ
+            </button>
+        </div>
+        <div class="certificate-wrapper" id="certificateBox">
+            <img src="pawlos.png" alt="ሰንበት ትምህርት ቤት ሎጎ" class="cert-logo" />
+            <div class="cert-header">ተክለሥላሴ ሰንበት ትምህርት ቤት</div>
+            <h1 class="cert-title">የምስክር ወረቀት</h1>
+            <div class="cert-text">ይህ የምስክር ወረቀት የተሰጠው ለ</div>
+            <div class="student-name" id="certName">የተማሪው ስም</div>
+            <div class="cert-text">
+                በተክለሥላሴ የመማሪያ ማዕከል የተዘጋጀውን የ
+                <span class="course-name">የቤተክርስቲያን ታሪክ</span> ትምህርት<br />
+                ተከታትሎ በማጠናቀቅ ከዚህ በታች የተገለጸውን ከፍተኛ ውጤት<br />ስላስመዘገበ(ች) ይህን የዕውቅና
+                ምስክር ወረቀት በደስታ አበርክተናል።
+            </div>
+            <div class="score-board">
+                <div class="score-card">
+                    <span class="score-label">የማጠቃለያ ፈተና</span>
+                    <span class="score-value" id="certExam">0</span>
+                </div>
+                <div class="score-card">
+                    <span class="score-label">የምርምር አሳይመንት</span>
+                    <span class="score-value" id="certAss">0</span>
+                </div>
+                <div class="score-card total">
+                    <span class="score-label">አጠቃላይ ውጤት</span>
+                    <span class="score-value" id="certTotal">0</span>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="signature-box">
+                    <div class="signature-line" id="certDate"></div>
+                    <div class="signature-text">የተሰጠበት ቀን</div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // JavaScript is unchanged
+            function populateData() {
+                let storedName =
+                    localStorage.getItem("student_name") || "የአባል ስም";
+                document.getElementById("certName").innerText = storedName;
+                let examScore =
+                    parseInt(localStorage.getItem("exam_score")) || 0;
+                let assScore =
+                    parseInt(localStorage.getItem("assignment_score")) || 0;
+                document.getElementById("certExam").innerText = examScore;
+                document.getElementById("certAss").innerText = assScore;
+                document.getElementById("certTotal").innerText =
+                    examScore + assScore;
+                let today = new Date();
+                let options = {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    calendar: "ethiopic",
+                };
+                let ethiopianDate = new Intl.DateTimeFormat(
+                    "am-ET-u-ca-ethiopic",
+                    options,
+                ).format(today);
+                document.getElementById("certDate").innerText = ethiopianDate;
+            }
+            function downloadAsImage() {
+                const btn = document.getElementById("downloadBtn");
+                const certBox = document.getElementById("certificateBox");
+                btn.innerHTML =
+                    '<i class="fas fa-spinner fa-spin"></i> እያዘጋጀ ነው...';
+                btn.disabled = true;
+                html2canvas(certBox, {
+                    scale: 3,
+                    useCORS: true,
+                    backgroundColor: null,
+                })
+                    .then((canvas) => {
+                        let link = document.createElement("a");
+                        let stuName = document
+                            .getElementById("certName")
+                            .innerText.split(" ")[0];
+                        link.download = stuName + "_ሰርተፍኬት.png";
+                        link.href = canvas.toDataURL("image/png");
+                        link.click();
+                        btn.innerHTML =
+                            '<i class="fas fa-download"></i> በምስል አውርድ';
+                        btn.disabled = false;
+                    })
+                    .catch((err) => {
+                        console.error("Image generation failed:", err);
+                        alert("ይቅርታ፣ ምስሉን ማዘጋጀት አልተቻለም።");
+                        btn.innerHTML =
+                            '<i class="fas fa-download"></i> በምስል አውርድ';
+                        btn.disabled = false;
+                    });
+            }
+            function printCertificate() {
+                window.print();
+            }
+            document
+                .getElementById("downloadBtn")
+                .addEventListener("click", downloadAsImage);
+            document
+                .getElementById("printBtn")
+                .addEventListener("click", printCertificate);
+            window.onload = populateData;
+        </script>
+    </body>
+</html>

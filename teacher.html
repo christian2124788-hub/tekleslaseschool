@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="am">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>የተማሪዎች አጠቃላይ እይታ | Admin</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            :root {
+                --gold: #d4af37;
+                --navy: #0a192f;
+                --white: #e6f1ff;
+                --accent: #64ffda;
+                --slate: #8892b0;
+                --card-bg: rgba(17, 34, 64, 0.7);
+                --red: #ff4d4d;
+                --green: #2ecc71;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", "Abyssinica SIL", sans-serif;
+            }
+            body {
+                background: linear-gradient(
+                    135deg,
+                    var(--navy) 0%,
+                    #020c1b 100%
+                );
+                color: var(--white);
+                min-height: 100vh;
+                padding: 30px 5%;
+                display: none; /* Initially hidden until password is correct */
+            }
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 20px;
+                border-bottom: 2px solid rgba(212, 175, 55, 0.5);
+                margin-bottom: 30px;
+            }
+            h1 {
+                color: var(--gold);
+                font-size: 2rem;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .btn-refresh {
+                background: var(--accent);
+                color: var(--navy);
+                padding: 10px 20px;
+                border: none;
+                border-radius: 8px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+            .btn-refresh:hover {
+                background: #52e0c4;
+                transform: translateY(-2px);
+            }
+            .table-container {
+                background: var(--card-bg);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                padding: 20px;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                overflow-x: auto;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th,
+            td {
+                padding: 15px;
+                text-align: left;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            th {
+                color: var(--gold);
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            td {
+                color: var(--slate);
+                font-size: 1rem;
+            }
+            tbody tr:hover {
+                background-color: rgba(255, 255, 255, 0.03);
+            }
+            tr:last-child td {
+                border-bottom: none;
+            }
+            td .progress-bar {
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 5px;
+                padding: 2px;
+                width: 100%;
+                min-width: 100px;
+            }
+            td .progress-fill {
+                background: linear-gradient(90deg, var(--gold), var(--accent));
+                height: 12px;
+                border-radius: 3px;
+            }
+            td.status-present {
+                color: var(--green);
+                font-weight: bold;
+            }
+            td.status-absent {
+                color: var(--red);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1><i class="fas fa-users-cog"></i> የተማሪዎች አጠቃላይ እይታ</h1>
+            <button class="btn-refresh" onclick="loadStudentData()">
+                <i class="fas fa-sync-alt"></i> መረጃውን አድስ
+            </button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ተ.ቁ.</th>
+                        <th>የተማሪው ስም</th>
+                        <th>የክርስትና ስም</th>
+                        <th>የፈተና ውጤት (/20)</th>
+                        <th>የአሳይመንት ውጤት (/10)</th>
+                        <th>አጠቃላይ ሂደት</th>
+                        <th>የመጨረሻ አቴንዳንስ</th>
+                    </tr>
+                </thead>
+                <tbody id="student-table-body">
+                    <!-- Data will be loaded here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            window.onload = function () {
+                const code = prompt("ይህ የአስተዳደር ገጽ ነው። እባክዎ ኮዱን ያስገቡ:");
+                if (code === "112233") {
+                    document.body.style.display = "block";
+                    loadStudentData();
+                } else {
+                    alert("ACCESS DENIED! የተሳሳተ ኮድ ነው።");
+                    document.body.innerHTML = `<h1 style='color: var(--red); text-align: center; padding-top: 50px;'>ACCESS DENIED</h1>`;
+                    document.body.style.display = "block";
+                }
+            };
+
+            function loadStudentData() {
+                const tableBody = document.getElementById("student-table-body");
+                tableBody.innerHTML = ""; // Clear existing data
+
+                // In a real app, you'd fetch this from a server. Here, we use localStorage.
+                const studentList =
+                    JSON.parse(localStorage.getItem("student_list")) || [];
+
+                if (studentList.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--slate); padding: 30px;">ምንም አይነት የተመዘገበ ተማሪ አልተገኘም። (ተማሪዎች ቢያንስ አንድ ጊዜ የመማሪያ ገጹን መክፈት አለባቸው)</td></tr>`;
+                    return;
+                }
+
+                studentList.forEach((studentId, index) => {
+                    const name =
+                        localStorage.getItem(`${studentId}_name`) || "N/A";
+                    const cname =
+                        localStorage.getItem(`${studentId}_cname`) || "N/A";
+
+                    // Fetch data using the unique studentId
+                    const examScore =
+                        parseInt(
+                            localStorage.getItem(`${studentId}_exam_score`),
+                        ) || 0;
+                    const isAssDone =
+                        localStorage.getItem(`${studentId}_assignment_done`) ===
+                        "true";
+                    const isExamDone =
+                        localStorage.getItem(`${studentId}_completed_exam`) ===
+                        "true";
+                    const assScore = isAssDone ? 10 : 0;
+
+                    let progress = 0;
+                    if (isExamDone) progress += 67;
+                    if (isAssDone) progress += 33;
+                    progress = Math.round(progress);
+
+                    const lastAttString = localStorage.getItem(
+                        `${studentId}_last_attendance`,
+                    );
+                    const todayString = new Date().toLocaleDateString();
+                    const attStatusClass =
+                        lastAttString === todayString
+                            ? "status-present"
+                            : "status-absent";
+                    const attText = lastAttString
+                        ? new Date(parseInt(lastAttString)).toLocaleDateString(
+                              "am-ET",
+                              {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                              },
+                          )
+                        : "አልተመዘገበም";
+
+                    const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${name}</td>
+                        <td>${cname}</td>
+                        <td>${examScore}</td>
+                        <td>${assScore}</td>
+                        <td>
+                            <div class="progress-bar" title="${progress}%">
+                                <div class="progress-fill" style="width: ${progress}%;"></div>
+                            </div>
+                        </td>
+                        <td class="${attStatusClass}">${attText}</td>
+                    </tr>
+                `;
+                    tableBody.innerHTML += row;
+                });
+            }
+        </script>
+    </body>
+</html>

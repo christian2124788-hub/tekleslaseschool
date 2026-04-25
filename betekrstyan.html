@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>የቤተ ክርስቲያን ታሪክ - 11 ክፍሎች (8ኛ ክፍል)</title>
+    <style>
+        :root { --gold: #d4af37; --gold-hover: #f5cc4b; --navy: #0a192f; --light-navy: #112240; --white: #e6f1ff; --gray: #8892b0; --green: #64ffda; --red: #ff648e; --bg-dark: #020c1b; --br: 12px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-dark); color: var(--white); font-family: 'Nyala', 'Abyssinica SIL', sans-serif; line-height: 1.8; font-size: 18px; padding: 20px; }
+        h1, h2, h3, h4 { color: var(--gold); margin-bottom: 15px; }
+        h1 { text-align: center; font-size: 2.2rem; margin-bottom: 30px; border-bottom: 2px dashed var(--gray); padding-bottom: 15px; }
+        h2 { border-bottom: 2px solid var(--gold); padding-bottom: 10px; font-size: 1.8rem; }
+        p { margin-bottom: 15px; text-align: justify; }
+        ul, ol { margin-left: 25px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .main-wrapper { display: flex; max-width: 1250px; margin: 0 auto; gap: 30px; }
+        .sidebar { flex: 0 0 250px; background: var(--navy); padding: 20px; border-radius: var(--br); border: 1px solid rgba(212,175,55,0.3); height: fit-content; position: sticky; top: 20px; }
+        .sidebar h3 { text-align: center; font-size: 1.4rem; border-bottom: 1px solid var(--gray); padding-bottom: 10px; }
+        .sidebar ul { list-style: none; margin-left: 0; }
+        .sidebar li { padding: 10px; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: all 0.3s; font-size: 1.05rem; border: 1px solid transparent; }
+        .sidebar li:hover { background-color: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.3); }
+        .sidebar li.active-nav { background-color: var(--gold); color: var(--bg-dark); font-weight: bold; }
+        .sidebar li.completed-nav { color: var(--gray); }
+        .sidebar li.completed-nav::after { content: ' ✓'; color: var(--green); }
+        .content-area { flex: 1; min-width: 0; }
+        .section { background: var(--light-navy); padding: 35px; border-radius: var(--br); border: 1px solid rgba(212,175,55,0.2); box-shadow: 0 10px 30px -15px rgba(2,12,27,0.8); display: none; }
+        .section.active { display: block; animation: fadeIn 0.6s ease; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; border-top: 1px solid rgba(136,146,176,0.3); padding-top: 20px; flex-wrap: wrap; gap: 15px; }
+        .btn { background: var(--gold); color: var(--bg-dark); border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: 0.3s; min-width: 150px; font-family: inherit; }
+        .btn:hover { background: var(--gold-hover); transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
+        .btn-secondary:hover { background: rgba(212,175,55,0.1); }
+        .quiz-intro { text-align: center; background: rgba(10,25,47,0.8); padding: 30px; border-radius: var(--br); border: 1px solid var(--gold); }
+        .warning-box { background: rgba(255,100,142,0.1); border: 1px solid var(--red); padding: 15px; border-radius: 8px; color: #ffb3c6; margin-bottom: 20px; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        input[type="text"], select { width: 100%; padding: 12px; background: var(--bg-dark); color: var(--white); border: 1px solid var(--gray); border-radius: 8px; font-family: inherit; font-size: 1.1rem; }
+        input[type="text"]:focus, select:focus { outline: none; border-color: var(--gold); }
+        .quiz-part { margin-bottom: 30px; background: var(--navy); padding: 20px; border-radius: var(--br); border-left: 4px solid var(--gold); }
+        .opt { display: block; background: var(--bg-dark); padding: 12px; margin: 8px 0; border-radius: 8px; cursor: pointer; border: 1px solid transparent; }
+        .opt:hover { border-color: var(--gold); background: rgba(212,175,55,0.05); }
+        .opt input { margin-right: 10px; transform: scale(1.2); }
+        .banned-screen { text-align: center; padding: 50px 20px; background: rgba(255,100,142,0.05); border: 2px dashed var(--red); border-radius: var(--br); display: none; }
+        .banned-screen h2 { color: var(--red); font-size: 2.5rem; margin-bottom: 20px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 850px) { .main-wrapper { flex-direction: column; } .sidebar { width: 100%; position: relative; top: 0; } .sidebar ul { display: flex; flex-wrap: wrap; gap: 10px; } .sidebar li { flex: 1 1 45%; text-align: center; font-size: 1rem; } .nav-buttons { flex-direction: column-reverse; } .btn { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <h1>የ8ኛ ክፍል - የቤተ ክርስቲያን ታሪክ</h1>
+
+    <div class="main-wrapper">
+        <div class="sidebar" id="sidebar">
+            <h3>ማውጫ</h3>
+            <ul id="nav-list">
+                <li id="nav_h1" onclick="showSection('h1')">ክፍል 1: ሕገ ልቡና</li>
+                <li id="nav_h2" onclick="showSection('h2')">ክፍል 2: ሕገ ኦሪት</li>
+                <li id="nav_h3" onclick="showSection('h3')">ክፍል 3: ክርስቶስ ልደት</li>
+                <li id="nav_h4" onclick="showSection('h4')">ክፍል 4: ብሔራዊ ሃይማኖት</li>
+                <li id="nav_h5" onclick="showSection('h5')">ክፍል 5: ተሰዓቱ ቅዱሳን</li>
+                <li id="nav_h6" onclick="showSection('h6')">ክፍል 6: ቅዱስ ያሬድ</li>
+                <li id="nav_h7" onclick="showSection('h7')">ክፍል 7: የዛግዌ ዘመን</li>
+                <li id="nav_h8" onclick="showSection('h8')">ክፍል 8: ሰሎሞናዊ ሥርወ መንግሥት</li>
+                <li id="nav_h9" onclick="showSection('h9')">ክፍል 9: አፄ ዘርዓ ያዕቆብ</li>
+                <li id="nav_h10" onclick="showSection('h10')">ክፍል 10: የግራኝ ወረራ</li>
+                <li id="nav_h11" onclick="showSection('h11')">ክፍል 11: የጎንደር ዘመን</li>
+                <li id="nav_exam" onclick="showSection('exam')">የማጠቃለያ ፈተና</li>
+            </ul>
+        </div>
+
+        <div class="content-area">
+            
+            <!-- ክፍል 1 -->
+            <div id="content_h1" class="section">
+                <h2>ክፍል 1: መግቢያ እና ዘመነ ሕገ ልቡና</h2>
+                <p><b>የኢትዮጵያ ሃይማኖታዊ ማንነት፡</b> ኢትዮጵያ ፈጣሪዋን ካመለኩ ቀደምት ሀገራት አንዷ ናት። በኦሪት ዘፍጥረት 2፡13 ላይ ከኤደን ገነት ከሚወጡ አራት ወንዞች መካከል አንዱ የሆነው ግዮን የኢትዮጵያን ምድር እንደሚከብ ተጽፏል። ይህ የሚያሳየው ሀገሪቱ ከዓለም ፍጥረት ጀምሮ በእግዚአብሔር ዘንድ የታወቀች መሆኗን ነው።</p>
+                <p><b>የስያሜው ምንጭ፡</b> "ኢትዮጵያ" የሚለው ስም በተለያዩ ምንጮች ይነሳል። በአንዳንድ የታሪክ ተመራማሪዎች በንጉሥ "ኢትዮጲስ" ስም እንደተሰየመች ይነገራል። በሌላ በኩል ደግሞ በኖህ የልጅ ልጅ በኩሽ ስም "የኩሽ ምድር" ተብላለች። ከግሪክ ቋንቋ አንጻር ደግሞ "Aithiops" (አይቶፕስ) ከሚለው ቃል የመጣ ሲሆን ትርጉሙም "ፊቱ በፀሐይ የተቃጠለ" ማለት ነው። የጥንት የግሪክ ጸሐፍት ኢትዮጵያውያንን "ንጹሐን፣ በቁመትና በውበት ከሌላው የላቁ፣ ለአማልክት ቅርብ የሆኑ" በማለት ገልጸዋቸዋል።</p>
+                <p><b>ኢትዮጵያ በሕገ ልቡና፡</b> ሕገ ልቡና ማለት ሕግ በጽሑፍ (በድንጋይ ጽላት ወይም በመጽሐፍ) ከመሰጠቱ በፊት፣ ሰዎች በተፈጥሮአቸው ከፈጣሪ የተሰጣቸውን ሕሊናዊ ሕግ በመከተል፣ ክፉውን ከበጎ በመለየት ይኖሩበት የነበረው ዘመን ነው። በዚህ ዘመን ኢትዮጵያውያን በህሊናቸው ፈጣሪን አውቀው ያመልኩ ነበር።</p>
+                <p>በዚህ ዘመን ከሚጠቀሱት ታላላቅ አባቶች መካከል **ነቢዩ ሄኖክ** አንዱ ነው። ሄኖክ የሥነ ፈለክ (Astronomy) ጥናትና የዘመን አቆጣጠር (ባሕረ ሐሳብ) መሠረት የሆነውን "መጽሐፈ ሄኖክን" የጻፈ ጥንታዊ አባት ነው። ሌላው **መልከጼዴቅ** ሲሆን እርሱም የሳሌም ንጉሥና የልዑል እግዚአብሔር ካህን ነበር። ለአብርሃም በኅብስትና በወይን መስዋዕት አቅርቦ ባርኮታል፤ ኢትዮጵያዊ እንደነበርም ትውፊቶች ያስረዳሉ።</p>
+                <div class="nav-buttons" style="justify-content: flex-end;">
+                    <button class="btn" onclick="completeLesson('h1', 'h2')">ቀጣይ: ክፍል 2 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 2 -->
+            <div id="content_h2" class="section">
+                <h2>ክፍል 2: ዘመነ ሕገ ኦሪት (ከንግሥተ ሳባ እስከ ታቦተ ጽዮን)</h2>
+                <p><b>ንግሥተ ሳባ (ማክዳ)፡</b> ከክርስቶስ ልደት በፊት በ1000 ዓ.ዓ ገደማ የነበረች ታላቅ የኢትዮጵያ ንግሥት ናት። የንጉሥ ሰሎሞንን ጥበብ ዝና በነጋዴው ታምሪን በኩል ሰምታ፣ እውነታውን ለማረጋገጥና ጥበብን ለመቅሰም በብዙ ስጦታና አጀብ ወደ ኢየሩሳሌም ተጓዘች። ሰሎሞንም በጥበቡ ሁሉንም ጥያቄዋን መለሰላት። ወደ ሀገሯ ስትመለስም ከሰሎሞን ፀንሳ "እብነ ሐኪም" (በኋላ ቀዳማዊ ምኒልክ የተባለውን) ወለደች።</p>
+                <p><b>ቀዳማዊ ምኒልክ እና ታቦተ ጽዮን፡</b> ምኒልክ አድጎ 22 ዓመት ሲሞላው አባቱን ሰሎሞንን ለማየት ወደ ኢየሩሳሌም ሄደ። ሰሎሞን ልጁን በደስታ ተቀብሎ ከእርሱ በኋላ በእስራኤል ዙፋን እንዲቀመጥ ቢጠይቀውም፣ ምኒልክ ግን ወደ እናቱ ሀገር ኢትዮጵያ መመለስን መረጠ። በዚህ ጊዜ ሰሎሞን ከእስራኤል ታላላቅ ሰዎች (የካህናትና የመኳንንት በኩር ልጆችን)፣ 318 ሌዋውያንን እና ሊቀ ካህናቱን አዛርያስን አብረውት እንዲሄዱ አዘዘ።</p>
+                <p>እነዚህ ካህናት ሲወጡ የእግዚአብሔር ፈቃድ ሆኖ **ታቦተ ጽዮንን** (ጽላተ ሙሴን) በድብቅ ይዘው ወጡ። ምኒልክና አጀቦቹ ወደ ኢትዮጵያ ሲደርሱ አክሱም ላይ ታቦቷን አኖሩ። ከዚህ ጊዜ ጀምሮ ኢትዮጵያ ሙሉ በሙሉ ከሕገ ልቡና ወደ ሕገ ኦሪት (የብሉይ ኪዳን ሥርዓት) ተሸጋገረች።</p>
+                <p><b>የኦሪት ሥርዓት በኢትዮጵያ፡</b> ታቦተ ጽዮን ከመጣች በኋላ፣ ኢትዮጵያውያን የግዝረትን ሥርዓት፣ የሰንበት አከባበርን፣ እንስሳትን የመሰዋት ሥርዓትን፣ እንዲሁም ንጹሕ እና ርኩስ የሆኑ ምግቦችን የመለየት የኦሪት ሕግጋትን በጥብቅ መፈጸም ጀመሩ። አቤሜሌክ የተባለው ኢትዮጵያዊ ጃንደረባም በእስራኤል ንጉሥ በሴዴቅያስ ዘመን ከፍተኛ ባለሟል ሆኖ ነቢዩ ኤርምያስን ከጉድጓድ አውጥቶ ሞት እንዳተረፈው መጽሐፍ ቅዱስ ይገልጻል።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h1')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h2', 'h3')">ቀጣይ: ክፍል 3 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 3 -->
+            <div id="content_h3" class="section">
+                <h2>ክፍል 3: ከክርስቶስ ልደት እስከ ሐዋርያት ስብከት</h2>
+                <p><b>ንጉሥ ባዜን እና የጌታ ልደት፡</b> ጌታችን መድኃኒታችን ኢየሱስ ክርስቶስ በቤተልሔም ሲወለድ፣ ኮከቡን ተከትለው፣ እጅ መንሻ (ወርቅ፣ ዕጣን፣ ከርቤ) ይዘው ለመስገድ ከመጡት ሦስት የጥበብ ሰዎች (ሰብአ ሰገል) መካከል አንዱ የኢትዮጵያው ንጉሥ **ባዜን** እንደነበር የቤተ ክርስቲያን ትውፊት ያስረዳል። ይህ ኢትዮጵያውያን የክርስቶስን መወለድ አስቀድመው እንዳወቁ ያሳያል።</p>
+                <p><b>የቅዱስ ቤተሰብ ስደት ወደ ኢትዮጵያ፡</b> ጌታችን ገና ሕፃን ሳለ ሄሮድስ ሊገድለው ስለፈለገ፣ እናቱ ድንግል ማርያምና አረጋዊው ዮሴፍ ሕፃኑን ይዘው ወደ ግብጽ ተሰደዱ። ከግብጽም አልፈው የኢትዮጵያን ምድር እንደረገጡና እንደ ደብረ ዳሞ፣ ጣና ቂርቆስ፣ ዋልድባ፣ አክሱም እና ሌሎችም ቅዱሳት መካናትን እንደባረኩ ትውፊት ይነግረናል።</p>
+                <p><b>የንግሥት ሕንደኬ ጃንደረባ (ባኮስ)፡</b> ኢትዮጵያ ወደ ክርስትና (ወደ አዲስ ኪዳን) የተሸጋገረችበት ዋነኛው ክስተት ነው። በሐዋርያት ሥራ ምዕራፍ 8 ላይ እንደተጻፈው፣ የኢትዮጵያ ንግሥት ሕንደኬ (Candace) ከፍተኛ ባለስልጣንና የገንዘቧ ሁሉ ኃላፊ የነበረው ጃንደረባ (በባህላዊ ስሙ ባኮስ)፣ በበዓለ ኃምሳ ወደ ኢየሩሳሌም ሊሰግድ ሄዶ ነበር።</p>
+                <p>ሲመለስም በሰረገላው ሆኖ የነቢዩን የኢሳይያስን መጽሐፍ ያነብ ነበር። የእግዚአብሔር መልአክ ሐዋርያው ፊልጶስን ወደ እርሱ ላከው። ፊልጶስም ቃሉን አብራርቶ ስለ ኢየሱስ ክርስቶስ ሰበከለት። ጃንደረባውም አምኖ በውኃ ተጠመቀ። ወደ ኢትዮጵያም ሲመለስ ወንጌልን በመስበክ **የመጀመሪያው ኢትዮጵያዊ ሐዋርያ (ወንጌላዊ)** ሆነ። ከእርሱ በተጨማሪ እንደ ማቴዎስ፣ በርተሎሜዎስና እንድርያስ ያሉ ሐዋርያት በኢትዮጵያ ወንጌልን ሰብከዋል።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h2')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h3', 'h4')">ቀጣይ: ክፍል 4 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 4 -->
+            <div id="content_h4" class="section">
+                <h2>ክፍል 4: ክርስትና የኢትዮጵያ ብሔራዊ ሃይማኖት ሲሆን</h2>
+                <p><b>አብርሃ ወአጽብሐ (ኢዛና እና ሳይዛና)፡</b> በ4ኛው መቶ ክፍለ ዘመን (በ320ዎቹ ዓ.ም) የነገሡ ታላላቅ ወንድማማች ነገሥታት ናቸው። "ኢዛና እና ሳይዛና" የቤተ መንግሥት ስማቸው ሲሆን፣ "አብርሃ ወአጽብሐ" ደግሞ የክርስትና (የስመ ጥምቀት) ስማቸው ነው። በእነሱ ዘመን ክርስትና ከመላው አገሪቱ አልፎ ብሔራዊ (የመንግሥት) ሃይማኖት ሆኗል።</p>
+                <p><b>የአባ ሰላማ (ፍሬምናጦስ) መምጣት፡</b> በ300 ዓ.ም ገደማ ሜሮጵዮስ የተባለ ሶርያዊ ፈላስፋ ከሁለት ወጣቶች (ፍሬምናጦስ እና ኤዴስዮስ) ጋር በቀይ ባህር ሲጓዝ መርከቡ ተሰበረበት። ወደብ ላይ (አዱሊስ) ሲደርሱም የአካባቢው ሰዎች ፈላስፋውን ሲገድሉት፣ ሁለቱ ወጣቶች ግን ተርፈው ወደ አክሱም ቤተ መንግሥት ተወሰዱ። ፍሬምናጦስ እጅግ ብልህ ስለነበር የንጉሥ ልጆች (ኢዛና እና ሳይዛናን) እንዲያስተምር ሞግዚት ሆኖ ተሾመ።</p>
+                <p>ነገሥታቱ ሲያድጉ፣ በውስጣቸው የነበረውን የክርስትና እምነት ይበልጥ ለማጠንከር ጳጳስ አስፈልጓቸው ነበር። ስለዚህ ፍሬምናጦስን ወደ ግብጽ (እስክንድርያ) ላኩት። በእስክንድርያ የነበሩት ፓትርያርክ ቅዱስ አትናቴዎስ፣ ከፍሬምናጦስ የተሻለ ሰው እንደማይገኝ አይተው፣ እሱን የመጀመሪያው የኢትዮጵያ ጳጳስ አድርገው ሾመው ላኩት።</p>
+                <p><b>ከሳቴ ብርሃን፡</b> ፍሬምናጦስ ወደ ኢትዮጵያ ሲመለስ **"አባ ሰላማ ከሳቴ ብርሃን"** (የሰላም አባት፣ ብርሃንን የገለጠ) የሚል ስያሜ ተሰጠው። በእርሱ እና በነገሥታቱ አብርሃ ወአጽብሐ ጥረት በ350 ዓ.ም ክርስትና የኢትዮጵያ ብሔራዊ ሃይማኖት ሆነ። መጽሐፍ ቅዱስም ከግሪክ (ጽርዕ) ወደ ግእዝ መተርጎም ጀመረ። በርካታ አብያተ ክርስቲያናት (የአክሱም ጽዮንን ጨምሮ) ታነጹ።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h3')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h4', 'h5')">ቀጣይ: ክፍል 5 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 5 -->
+            <div id="content_h5" class="section">
+                <h2>ክፍል 5: ተሰዓቱ ቅዱሳን (ዘጠኙ ቅዱሳን)</h2>
+                <p><b>ታሪካዊ ዳራ፡</b> በ451 ዓ.ም በኬልቄዶን በተደረገው የቤተ ክርስቲያን ጉባኤ ላይ ትልቅ የሥነ መለኮት ክርክር ተነሳ። የሮምና የቁስጥንጥንያ አብያተ ክርስቲያናት "በክርስቶስ ሁለት ባህርይ (መለኮታዊና ትስብእታዊ) አለ" ሲሉ፣ የእስክንድርያና የኢትዮጵያ አብያተ ክርስቲያናት ደግሞ (የቅዱስ ቄርሎስን ትምህርት በመከተል) "ሁለቱ ባህርያት ያለመቀላቀል፣ ያለመለያየት ተዋሕደው አንድ ባህርይ ሆነዋል" (ተዋሕዶ) ብለው ጸኑ።</p>
+                <p>በዚህ ውሳኔ (ኬልቄዶን) ባለመስማማታቸው ምክንያት በሮምና በሶርያ የነበሩ ኦርቶዶክሳውያን አባቶች ላይ ከባድ ስደት መጣ። ከእነዚህም መካከል **ዘጠኝ ቅዱሳን አባቶች** ሃይማኖታቸውን ጠብቀው ከሶርያ፣ ሮም፣ ቁስጥንጥንያ እና ሌሎችም አካባቢዎች በመነሳት ወደ ኢትዮጵያ መጡ።</p>
+                <p><b>የዘጠኙ ቅዱሳን ስም እና ገዳሞቻቸው፡</b>
+                1. አቡነ አረጋዊ (ዘሚካኤል) - ደብረ ዳሞ (በእባብ ተስበው የወጡበት ገዳም)
+                2. አቡነ ገሪማ (ይስሐቅ) - ደብረ መደራ (በአንድ ቀን ወንጌልን የጻፉ)
+                3. አቡነ ጰንጠሌዎን - ደብረ ጰንጠሌዎን (አክሱም አጠገብ)
+                4. አቡነ አፍጼ - ይሐ
+                5. አቡነ ሊቃኖስ - ደብረ ቆናጽል
+                6. አቡነ ጉባ - ደብረ ነቀሰገ
+                7. አቡነ አሌፍ - ደብረ ብኅዛ
+                8. አቡነ ይምዓታ - ገርዓልታ (በአለት ላይ የተፈለፈለ ቤተመቅደስ)
+                9. አቡነ ጽሕማ - ደብረ ጼዴንያ
+                </p>
+                <p><b>ያበረከቱት አስተዋጽኦ፡</b> እነዚህ አባቶች ኢትዮጵያ ውስጥ ገዳማዊ ሕይወትን (ምንኩስናን) አስፋፍተዋል። ከግሪክ፣ ከሶርያና ከዕብራይስጥ ቋንቋዎች በርካታ የቤተ ክርስቲያን መጻሕፍትን ወደ ግእዝ ተርጉመዋል። እንዲሁም የሀገሪቱን ባህል አክብረው ከሕዝቡ ጋር በመዋሐድ ክርስትናን አጽንተዋል።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h4')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h5', 'h6')">ቀጣይ: ክፍል 6 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 6 -->
+            <div id="content_h6" class="section">
+                <h2>ክፍል 6: ቅዱስ ያሬድ እና የቤተ ክርስቲያን ዜማ</h2>
+                <p><b>የቅዱስ ያሬድ ታሪክ፡</b> ቅዱስ ያሬድ በ6ኛው መቶ ክፍለ ዘመን (በ505 ዓ.ም ገደማ) በአክሱም ከተማ የተወለደ ታላቅ ኢትዮጵያዊ ሊቅ ነው። ወላጆቹ አብዩድ እና ታውክሊያ ይባላሉ። አባቱ ሲሞት ያሳደገውና ያስተማረው አጎቱ መምህር ጌዴዎን ነበር። ያሬድ በልጅነቱ ትምህርት አልገባው ብሎ ተስፋ ቆርጦ ሸሽቶ ነበር። ነገር ግን አንዲት ትል (ዕጭ) ዛፍ ላይ ለመውጣት ሰባት ጊዜ ወድቃ በስምንተኛው ስትወጣ ተመልክቶ፣ "እኔም ከዚህች ትል አላንስም" ብሎ ወደ ትምህርቱ ተመልሶ በጸሎት ብርታት ታላቅ ሊቅ ሊሆን ችሏል።</p>
+                <p><b>ሰማያዊው ዜማ፡</b> ቅዱስ ያሬድ ከእግዚአብሔር በተሰጠው ጸጋ፣ ሦስት አዕዋፍ (ወፎች) በግእዝ፣ በእዝል እና በአራራይ ዜማ ሲዘምሩ ሰምቶ ወደ ሰማይ (ወደ ኤዶም ገነት) ተነጥቆ የ መላእክትን ዝማሬ ሰማ። ከዚህ በኋላ ወደ ምድር ተመልሶ የኢትዮጵያ ቤተ ክርስቲያንን ልዩ እና መንፈሳዊ ዜማ ደረሰ። የዜማ ምልክቶችንም (ነጥቦች፣ ቁርጾች) የፈጠረ የሙዚቃ ሊቅ ነው።</p>
+                <p><b>አምስቱ የዜማ መጻሕፍት (አምስቱ ጸዋትወ ዜማ)፡</b>
+                1. <b>ድጓ (ድጓ)፡</b> ለዘመኑ፣ ለበዓላቱ፣ ለሰንበታት የሚዘመር።
+                2. <b>ጾመ ድጓ፡</b> በዐቢይ ጾም ወቅት ብቻ የሚዘመር።
+                3. <b>ምዕራፍ፡</b> ለዘወትር ጸሎትና ለበዓላት ማግስት የሚቀርብ።
+                4. <b>ዝማሬ፡</b> ከቅዳሴ በኋላ ለቅዱስ ቁርባን የሚቀርብ ዜማ።
+                5. <b>መዋሥዕት፡</b> ለሙታን መታሰቢያና ለጸሎተ ፍትሐት የሚቀርብ።</p>
+                <p><b>ሦስቱ የዜማ ቀለማት፡</b>
+                * <b>ግእዝ፡</b> ጠንከር ያለ፣ ግርማ ያለው (ለዘወትር እና ለአብ ዘመን)።
+                * <b>ዕዝል፡</b> ለስላሳ፣ አሳዛኝ፣ የፍቅርና የጾም ዜማ (ለወልድ ዘመን)።
+                * <b>አራራይ፡</b> እጅግ ደስ የሚያሰኝ፣ የሐሴት ዜማ (ለመንፈስ ቅዱስ ዘመን)። ቅዱስ ያሬድ የኢትዮጵያ ቤተ ክርስቲያንን ብቻ ሳይሆን የዓለም ሥነ-ሙዚቃን ታሪክ የቀየረ ታላቅ ሊቅ ነው።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h5')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h6', 'h7')">ቀጣይ: ክፍል 7 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 7 -->
+            <div id="content_h7" class="section">
+                <h2>ክፍል 7: የዛግዌ ሥርወ መንግሥት እና ቅዱስ ላሊበላ</h2>
+                <p><b>ወደ ላስታ መዛወር፡</b> በ10ኛው መቶ ክፍለ ዘመን አካባቢ የአክሱም መንግሥት እየደከመ ሲመጣ (በተለይ በዮዲት ጉዲት ጥፋት ምክንያት)፣ የመንግሥቱ ማዕከል ከትግራይ ወደ ወሎ (ላስታ ቡግና) ተዛወረ። ይህ ሥርወ መንግሥት "ዛግዌ" (የአገው ሥርወ መንግሥት) ይባላል። ከ900 በላይ ለሚሆኑ ዓመታት (እስከ 1270 ዓ.ም) ኢትዮጵያን አስተዳድረዋል። የዛግዌ ነገሥታት አብዛኛዎቹ ጻድቃን፣ ካህናትና ታላላቅ መንፈሳዊ መሪዎች ነበሩ። ከእነርሱም መካከል ይምርሐነ ክርስቶስ፣ ሐርቤ፣ ነአኩቶ ላአብ እና ቅዱስ ላሊበላ ይገኙበታል።</p>
+                <p><b>ቅዱስ ላሊበላ፡</b> የዛግዌ ሥርወ መንግሥት ታላቁ ንጉሥ ነው። ሲወለድ ንቦች ከበውት ስለነበር እናቱ "ላሊበላ" (ማለትም ንቦች ርስትህን ያውቃሉ) ብላዋለች። ወደ ኢየሩሳሌም ሄዶ ቅዱሳት መካናትን ከተሳለመ በኋላ፣ ኢትዮጵያውያን ምዕመናን በረሃብና በችግር እየተሰቃዩ ወደ ኢየሩሳሌም እንዳይሄዱ በማሰብ፣ "ሁለተኛዋን ኢየሩሳሌም" በላስታ ሮሃ ለመሥራት ወሰነ።</p>
+                <p><b>ውቅር አብያተ ክርስቲያናት፡</b> ቅዱስ ላሊበላ በመላእክት እርዳታ (በቀን ሰዎች፣ በማታ መላእክት እየሠሩት) ከጥቁር አለት (ድንጋይ) ፈልፍሎ 11 ድንቅ አብያተ ክርስቲያናትን አንጿል። እነዚህም በሦስት ምድብ ይከፈላሉ፡
+                1. <b>የምድራዊቷ ኢየሩሳሌም ምሳሌ፡</b> ቤተ መድኃኔዓለም፣ ቤተ ማርያም፣ ቤተ መስቀል፣ ቤተ ደናግል፣ ቤተ ጎልጎታ (እና ቤተ ሚካኤል)።
+                2. <b>የሰማያዊቷ ኢየሩሳሌም ምሳሌ፡</b> ቤተ አማኑኤል፣ ቤተ መርቆሬዎስ፣ ቤተ ገብርኤል ሩፋኤል፣ ቤተ አባ ሊባኖስ።
+                3. <b>የኖኅ መርከብ ምሳሌ፡</b> ቤተ ጊዮርጊስ (በመስቀል ቅርጽ የተፈለፈለ፣ እጅግ ውብ የሆነው)።</p>
+                <p>እነዚህ አብያተ ክርስቲያናት ዛሬም ድረስ የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን ህያው ምስክሮችና የዓለም ቅርሶች ሆነው ዘመን ይሻገራሉ።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h6')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h7', 'h8')">ቀጣይ: ክፍል 8 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 8 -->
+            <div id="content_h8" class="section">
+                <h2>ክፍል 8: የሰሎሞናዊ ሥርወ መንግሥት መመለስ እና አቡነ ተክለ ሃይማኖት</h2>
+                <p><b>የሰሎሞናዊ ሥርወ መንግሥት መመለስ፡</b> በ1270 ዓ.ም የዛግዌ ሥርወ መንግሥት አብቅቶ፣ ስልጣን ከቀዳማዊ ምኒልክ ዘር ወደመጡት ወደ ሸዋ ነገሥታት ተመለሰ። ይህን የሽግግር ወቅት በሰላም በማካሄድ በኩል ትልቁን ሚና የተጫወቱት አቡነ ተክለ ሃይማኖት ናቸው። የመጨረሻው የዛግዌ ንጉሥ ነአኩቶ ላአብ መንግሥቱን በፈቃዱ ለአፄ ይኩኖ አምላክ (የሰሎሞናዊው ሥርወ መንግሥት መስራች) አስረከበ። በዚህም "ሰሎሞናዊ ሥርወ መንግሥት" በድጋሚ ተመሰረተ።</p>
+                <p><b>አቡነ ተክለ ሃይማኖት፡</b> በ13ኛው መቶ ክፍለ ዘመን የነበሩ ታላቅ ኢትዮጵያዊ ጻድቅ፣ ሐዋርያ እና የገዳማት አባት ናቸው። በሸዋ ዞረሬ የተወለዱ ሲሆን፣ በወጣትነታቸው ወንጌልን በመላው ደቡብና ማዕከላዊ ኢትዮጵያ (ዳሞት፣ ሸዋ፣ ወላይታ ወዘተ) ሰብከዋል። አረማውያንን አስተምረው ወደ ክርስትና መልሰዋል፤ ጣዖታትን ሰብረዋል።</p>
+                <p><b>የደብረ ሊባኖስ ገዳም እና ምንኩስና፡</b> አቡነ ተክለ ሃይማኖት ወደ ሰሜን (ደብረ ዳሞ) በመሄድ ከአቡነ ኢየሱስ ሞዓ የምንኩስና አስኬማ ተቀብለዋል። ከዚያም ወደ ሸዋ በመመለስ ታላቁን "ደብረ አሥቦ" (የአሁኑ ደብረ ሊባኖስ) ገዳምን መሠረቱ። በዚያም ለ22 ዓመታት ቆመው በመጸለይ አንዱ እግራቸው እስከሚሰበር ድረስ ትልቅ ተጋድሎ አድርገዋል።</p>
+                <p>የኢትዮጵያ ቤተ ክርስቲያን አስተዳደርን በማዋቀር ረገድም የአቡነ ተክለ ሃይማኖት ሚና ከፍተኛ ነበር። የእሳቸው ተተኪዎች የሆኑት አበምኔቶች "እጨጌ" እየተባሉ የኢትዮጵያ ገዳማትና መነኮሳት የበላይ አስተዳዳሪ ሆነው እንዲያገለግሉ ሥርዓት ተሰራ። ይህ ዘመን የኢትዮጵያ ቤተ ክርስቲያን የገዳማዊ ሕይወት የለመለመበት (Golden Age of Monasticism) በመባል ይታወቃል።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h7')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h8', 'h9')">ቀጣይ: ክፍል 9 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 9 -->
+            <div id="content_h9" class="section">
+                <h2>ክፍል 9: አፄ ዘርዓ ያዕቆብ እና የቤተ ክርስቲያን ሥነ ጽሑፍ</h2>
+                <p><b>የአፄ ዘርዓ ያዕቆብ ዘመን፡</b> አፄ ዘርዓ ያዕቆብ በ15ኛው መቶ ክፍለ ዘመን (ከ1434 - 1468 ዓ.ም) የነገሡ ታላቅ ንጉሠ ነገሥት እና የቤተ ክርስቲያን ሊቅ ነበሩ። እሳቸው ኢትዮጵያን ካስተዳደሩባቸው ዓመታት ይልቅ ለቤተ ክርስቲያን ባበረከቱት አስተዋጽኦ በጉልህ ይታወሳሉ። አፄ ዘርዓ ያዕቆብ የሥነ-መለኮት ምሁር ስለነበሩ፣ በዘመኑ የተነሱትን የሃይማኖት ክርክሮች (ለምሳሌ ስለ ሥላሴ አንድነትና ሦስትነት፣ ስለ ሰንበት አከባበር) በጉባኤ በመፍታት ቤተ ክርስቲያንን አንድ አድርገዋል።</p>
+                <p><b>የድርሰት ሥራዎች፡</b> አፄ ዘርዓ ያዕቆብ የኢትዮጵያ ሥነ ጽሑፍ (Literature) እንዲያድግ ትልቅ ውለታ ውለዋል። እርሳቸው ራሳቸው በርካታ መጻሕፍትን ጽፈዋል። ከነዚህም መካከል፡
+                1. <b>መጽሐፈ ብርሃን፡</b> ስለ ክርስቲያናዊ ሥነ ምግባር እና ከጣዖት አምልኮ ስለመራቅ የሚመክር።
+                2. <b>መጽሐፈ ሚላድ፡</b> ስለ ክርስቶስ ልደት እና ሥጋዌ የሚያስረዳ።
+                3. <b>ተዓቅቦ ምሥጢር፡</b> ስለ ሃይማኖት ምሥጢራት የተጻፈ።
+                በእሳቸው ትዕዛዝ "ተአምረ ማርያም" ተተርጉሞ በየአብያተ ክርስቲያናቱ እንዲነበብ አድርገዋል።</p>
+                <p><b>ሃይማኖታዊ ማሻሻያዎችና በዓላት፡</b> አፄ ዘርዓ ያዕቆብ የሃይማኖት ሕጎችን አጥብቀው ያስፈጽሙ ነበር። ጥንቆላን፣ አስማትን እና ጣዖት አምልኮን በጽኑ ተዋግተዋል። በየወሩ በ33ቱ የእመቤታችን የቅድስት ድንግል ማርያም በዓላት፣ የጌታ በዓላት፣ እንዲሁም የሰንበት በዓል በድምቀት እንዲከበሩ አዋጅ አውጥተዋል። በዘመናቸው ቤተ ክርስቲያን በመንፈሳዊ ትምህርት፣ በሥርዓት እና በአንድነት እጅግ ከፍተኛ ደረጃ ላይ ደርሳ ነበር።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h8')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h9', 'h10')">ቀጣይ: ክፍል 10 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 10 -->
+            <div id="content_h10" class="section">
+                <h2>ክፍል 10: የግራኝ አህመድ ወረራ እና የቤተ ክርስቲያን ፈተና</h2>
+                <p><b>የወረራው መነሻ፡</b> በ16ኛው መቶ ክፍለ ዘመን መጀመሪያ ላይ (በ1520ዎቹ ዓ.ም) አሕመድ ኢብን ኢብራሂም አል-ጋዚ (በታሪክ "ግራኝ አህመድ" በመባል የሚታወቀው)፣ የኦቶማን ቱርኮችን ድጋፍ በማግኘት በኢትዮጵያ ቤተ ክርስቲያን እና መንግሥት ላይ ኃይለኛ ጦርነት ከፈተ። በአፄ ልብነ ድንግል ዘመን የጀመረው ይህ ጦርነት ለ15 ዓመታት ኢትዮጵያን በእሳት አጋያት።</p>
+                <p><b>የቤተ ክርስቲያን ፈተና እና ውድመት፡</b> ይህ ወቅት ለኢትዮጵያ ኦርቶዶክስ ቤተ ክርስቲያን እጅግ የጨለመ ዘመን ነበር። ግራኝ አህመድ ታላላቅ አብያተ ክርስቲያናትን (እንደ አክሱም ጽዮን፣ መካነ ሥላሴ፣ እና ሌሎችም ታሪካዊ ገዳማትን) አቃጥሏል። በሺዎች የሚቆጠሩ የብራና መጻሕፍት፣ ንዋያተ ቅድሳት እና የወርቅ መስቀሎች ተዘርፈዋል፣ ወድመዋል። እጅግ ብዙ ካህናት፣ መነኮሳት እና ምዕመናን ሃይማኖታችንን አንክድም በማለታቸው በሰማዕትነት ተገድለዋል።</p>
+                <p><b>የፖርቹጋሎች መምጣት እና የጦርነቱ ፍጻሜ፡</b> አፄ ልብነ ድንግል ስደት ላይ እያሉ ክርስቲያኗን ሀገር ፖርቹጋልን እርዳታ ጠይቀው ነበር። እሳቸው ካረፉ በኋላ ልጃቸው አፄ ገላውዴዎስ ሲነግሥ፣ በክርስቶፈር ዳጋማ የሚመራ 400 የፖርቹጋል ጦር መጣ። ፖርቹጋሎች ዘመናዊ መሣሪያ ታጥቀው ስለነበር ከኢትዮጵያ ሠራዊት ጋር በመሆን በዋይና ደጋ ጦርነት (በ1543 ዓ.ም) ግራኝ አህመድን በመግደል ወረራውን አቆሙት።</p>
+                <p>አፄ ገላውዴዎስ ከድሉ በኋላ የፈረሱትን አብያተ ክርስቲያናት መልሶ በመገንባት፣ የተሰደዱትን ካህናት በመሰብሰብ፣ እና የጠፉትን መጻሕፍት ዳግም በማስጻፍ ቤተ ክርስቲያኒቱን ለማንሰራራት ከፍተኛ ጥረት አድርገዋል።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h9')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h10', 'h11')">ቀጣይ: ክፍል 11 ➔</button>
+                </div>
+            </div>
+
+            <!-- ክፍል 11 -->
+            <div id="content_h11" class="section">
+                <h2>ክፍል 11: የጎንደር ዘመነ መንግሥት እና የካቶሊክ እምነት ፈተና</h2>
+                <p><b>የካቶሊክ ሚሲዮናውያን ፈተና፡</b> ግራኝ አህመድን ለመዋጋት የመጡት ፖርቹጋሎች፣ በኋላ ላይ የራሳቸውን (የካቶሊክ) እምነት በኢትዮጵያ ላይ ለመጫን ሞከሩ። በተለይም በአልፎንሶ ሜንዴዝ የሚመሩ ጀሱይቶች (Jesuits)፣ አፄ ሱሰንዮስን (በ1622 ዓ.ም) የካቶሊክ እምነትን እንዲቀበሉ አሳመኗቸው። አፄ ሱሰንዮስ የካቶሊክ እምነትን የሀገሪቱ ብሔራዊ ሃይማኖት አድርገው በማወጃቸው ምክንያት ታላቅ የእርስ በእርስ ጦርነት ተነሳ።</p>
+                <p>የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ አባቶች፣ መነኮሳትና ምዕመናን ጥንታዊት እምነታችንን አንቀይርም ብለው በመነሳታቸው፣ በአንድ ቀን ብቻ ወደ 8000 የሚጠጉ ሰዎች በሰማዕትነት ተሰውተዋል። ውሎ አድሮ አፄ ሱሰንዮስ ሕዝቡ ማለቁን ሲያዩ፣ ዙፋናቸውን ለልጃቸው ለፋሲለደስ አስረክበው ዘረፉ።</p>
+                <p><b>አፄ ፋሲለደስ እና የጎንደር መቆርቆር፡</b> አፄ ፋሲለደስ እንደነገሡ (በ1632 ዓ.ም) ያደረጉት የመጀመሪያው ተግባር የኦርቶዶክስ ተዋሕዶ ሃይማኖትን ዳግም መመለስና የካቶሊክ ሚሲዮናውያንን ከሀገር ማባረር ነበር። "ሃይማኖት ተመልሳለች፣ ካህናት ወደ ቤተ ክርስቲያናችሁ ግቡ" የሚል ታሪካዊ አዋጅ አወጁ።</p>
+                <p>ከዚህ በኋላ አፄ ፋሲለደስ የመንግሥታቸውን ከተማ **ጎንደር** አደረጉ (በ1636 ዓ.ም)። የጎንደር ዘመን የኢትዮጵያ ሥነ-ህንፃ፣ የቤተ ክርስቲያን ሥዕል (Art)፣ ቅኔ፣ እና ትምህርት በከፍተኛ ሁኔታ ያደገበት (የህዳሴ ዘመን) ነው። በአፄ ፋሲለደስ እና በተከታዮቻቸው ዘመን እንደ "ጎንደር ደብረ ብርሃን ሥላሴ"፣ "ቁስቋም ማርያም" እና "ባዕታ ማርያም" ያሉ እጅግ ውብ እና ታሪካዊ አብያተ ክርስቲያናት ተገንብተዋል።</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showSection('h10')">⬅ ወደኋላ</button>
+                    <button class="btn" onclick="completeLesson('h11', 'exam')">ወደ ማጠቃለያ ፈተና ሂድ ➔</button>
+                </div>
+            </div>
+
+            <!-- ማጠቃለያ ፈተና -->
+            <div id="content_exam" class="section">
+                <!-- የታገደ ገጽ (Cheat Screen) -->
+                <div id="banned-screen" class="banned-screen">
+                    <h2>🚫 ፈተናው ተቋርጧል!</h2>
+                    <p>ፈተና ላይ እያሉ ወደ ሌላ ገጽ ስለዞሩ (Tab ስለቀየሩ) ፈተናዎ ወዲያውኑ ታግዷል።</p>
+                    <br>
+                    <p style="color: var(--gold); font-weight: bold;">ዳግም ለመፈተን ሰንበት ትምህርት ቤቱን ያናግሩ።</p>
+                </div>
+
+                <!-- ፈተና መግቢያ -->
+                <div id="exam-intro-screen" class="quiz-intro">
+                    <h2>የ8ኛ ክፍል ማጠቃለያ ፈተና (ከ11ቱም ክፍሎች የተውጣጣ)</h2>
+                    <div class="warning-box">
+                        <b>ማሳሰቢያ (ጥብቅ መመሪያ)፦</b> ፈተናውን ከጀመሩ በኋላ <b>ወደ ሌላ ፔጅ መሄድ (Tab መቀየር) በጥብቅ የተከለከለ ነው።</b> ይህን ካደረጉ ፈተናው ወዲያውኑ ይቋረጣል!
+                    </div>
+                    <div class="input-group">
+                        <label for="studentFullName">ሙሉ ስምዎን (ከነ አያት) ያስገቡ፡</label>
+                        <input type="text" id="studentFullName" placeholder="ለምሳሌ: አበበ ከበደ" required>
+                    </div>
+                    <button type="button" class="btn" onclick="startExamProcess()">ተስማምቻለሁ፣ ፈተናውን ጀምር</button>
+                    <div class="nav-buttons" style="margin-top: 20px; border:none;">
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="showSection('h11')">⬅ ወደኋላ (ክፍል 11)</button>
+                    </div>
+                </div>
+
+                <!-- ዋናው ፈተና -->
+                <div id="exam-questions-screen" style="display: none;">
+                    <h2 style="text-align: center;">ፈተና እየሰሩ ነው...</h2>
+                    <p style="text-align: center; color: var(--gray);">መልካም ዕድል <span id="display-name" style="color:var(--gold);"></span>!</p>
+                    
+                    <form id="quizForm">
+                        <div class="quiz-part">
+                            <h4>ክፍል 1፡ ምርጫ (በጥንቃቄ ይምረጡ)</h4>
+                            <div class="quiz-question">
+                                <p>1. የንግሥት ሕንደኬ ጃንደረባን (ባኮስን) ያጠመቀው ሐዋርያ ማን ነው?</p>
+                                <label class="opt"><input type="radio" name="q1" value="A"> A. ጴጥሮስ</label>
+                                <label class="opt"><input type="radio" name="q1" value="B"> B. ማቴዎስ</label>
+                                <label class="opt"><input type="radio" name="q1" value="C"> C. ፊልጶስ</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>2. መጽሐፈ ብርሃን፣ መጽሐፈ ሚላድ እና ተዓቅቦ ምሥጢርን የጻፉት ንጉሥ?</p>
+                                <label class="opt"><input type="radio" name="q2" value="A"> A. አፄ ላሊበላ</label>
+                                <label class="opt"><input type="radio" name="q2" value="B"> B. አፄ ዘርዓ ያዕቆብ</label>
+                                <label class="opt"><input type="radio" name="q2" value="C"> C. አፄ ፋሲለደስ</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>3. ከቅዱስ ያሬድ አምስቱ የዜማ መጻሕፍት ውስጥ ለዐቢይ ጾም ብቻ የሚዘመረው የትኛው ነው?</p>
+                                <label class="opt"><input type="radio" name="q3" value="A"> A. ጾመ ድጓ</label>
+                                <label class="opt"><input type="radio" name="q3" value="B"> B. መዋሥዕት</label>
+                                <label class="opt"><input type="radio" name="q3" value="C"> C. ዝማሬ</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>4. የካቶሊክን እምነት አስወግደው የኦርቶዶክስ ተዋሕዶ እምነትን መልሰው ያወጁት ንጉሥ?</p>
+                                <label class="opt"><input type="radio" name="q4" value="A"> A. አፄ ሱሰንዮስ</label>
+                                <label class="opt"><input type="radio" name="q4" value="B"> B. አፄ ልብነ ድንግል</label>
+                                <label class="opt"><input type="radio" name="q4" value="C"> C. አፄ ፋሲለደስ</label>
+                            </div>
+                        </div>
+
+                        <div class="quiz-part">
+                            <h4>ክፍል 2፡ ባዶ ቦታ መሙላት</h4>
+                            <div class="quiz-question">
+                                <p>5. በሮሃ 11 ውቅር አብያተ ክርስቲያናትን ያነጸው ታላቁ የዛግዌ ንጉሥ <input type="text" name="q5" style="width:200px; display:inline;"> ይባላል።</p>
+                            </div>
+                            <div class="quiz-question">
+                                <p>6. የመጀመሪያውን የኢትዮጵያ ጳጳስ "አባ ሰላማን" የሾሙት የእስክንድርያ ፓትርያርክ ቅዱስ <input type="text" name="q6" style="width:200px; display:inline;"> ናቸው።</p>
+                            </div>
+                            <div class="quiz-question">
+                                <p>7. ታላቁን የደብረ ሊባኖስ ገዳም የመሠረቱት ኢትዮጵያዊ ጻድቅ አቡነ <input type="text" name="q7" style="width:200px; display:inline;"> ናቸው።</p>
+                            </div>
+                        </div>
+
+                        <div class="quiz-part">
+                            <h4>ክፍል 3፡ እውነት ወይም ሐሰት</h4>
+                            <div class="quiz-question">
+                                <p>8. አብርሃ ወአጽብሐ ክርስትናን የኢትዮጵያ ብሔራዊ ሃይማኖት አድርገው አውጀዋል።</p>
+                                <label class="opt"><input type="radio" name="q8" value="True"> እውነት</label>
+                                <label class="opt"><input type="radio" name="q8" value="False"> ሐሰት</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>9. ዘጠኙ ቅዱሳን የመጡት የኬልቄዶንን የ"ሁለት ባህርይ" ውሳኔ ተቀብለው ለማስተማር ነው።</p>
+                                <label class="opt"><input type="radio" name="q9" value="True"> እውነት</label>
+                                <label class="opt"><input type="radio" name="q9" value="False"> ሐሰት</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>10. ግራኝ አህመድን ድል በማድረግ የኢትዮጵያን ቤተ ክርስቲያን የታደጉት አፄ ገላውዴዎስ ናቸው።</p>
+                                <label class="opt"><input type="radio" name="q10" value="True"> እውነት</label>
+                                <label class="opt"><input type="radio" name="q10" value="False"> ሐሰት</label>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn" onclick="submitQuiz()" style="width: 100%; font-size: 1.3rem;">አጠናቅቄያለሁ - ላክ</button>
+                    </form>
+                    <div id="quiz-results" style="margin-top: 25px; font-size: 1.3rem; text-align: center; font-weight: bold;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BOT_TOKEN = "8260973428:AAGH8ZCRGEIbLQIsmh32jjyDiMZgO75IRM8";
+        const CHAT_ID = "7388335181";
+        
+        const lessons = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8', 'h9', 'h10', 'h11', 'exam'];
+        let isExamActive = false;
+        let studentName = "";
+
+        function showSection(id) {
+            if (id === 'exam' && localStorage.getItem('isBanned') === 'true') {
+                hideAllSections();
+                document.getElementById('content_exam').classList.add('active');
+                document.getElementById('nav_exam').classList.add('active-nav');
+                showBannedScreen();
+                return;
+            }
+            hideAllSections();
+            const activeContent = document.getElementById('content_' + id);
+            const activeNav = document.getElementById('nav_' + id);
+            if (activeContent) activeContent.classList.add('active');
+            if (activeNav) activeNav.classList.add('active-nav');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function hideAllSections() {
+            lessons.forEach(id => {
+                const content = document.getElementById('content_' + id);
+                const nav = document.getElementById('nav_' + id);
+                if (content) content.classList.remove('active');
+                if (nav) nav.classList.remove('active-nav');
+            });
+        }
+
+        function updateNav() {
+            lessons.forEach(id => {
+                const nav = document.getElementById('nav_' + id);
+                if (localStorage.getItem('completed_' + id) === 'true' && nav) {
+                    nav.classList.add('completed-nav');
+                }
+            });
+        }
+
+        function completeLesson(currentId, nextId) {
+            localStorage.setItem('completed_' + currentId, 'true');
+            updateNav();
+            showSection(nextId);
+        }
+
+        window.onload = function() {
+            let firstUncompleted = lessons[0];
+            for (const id of lessons) {
+                if (localStorage.getItem('completed_' + id) !== 'true') {
+                    firstUncompleted = id; break;
+                }
+            }
+            if (localStorage.getItem('completed_exam') === 'true' || localStorage.getItem('isBanned') === 'true') {
+                firstUncompleted = 'exam';
+            }
+            showSection(firstUncompleted);
+            updateNav();
+        };
+
+        function startExamProcess() {
+            const nameInput = document.getElementById('studentFullName').value.trim();
+            if (nameInput.length < 3) { alert("እባክዎ ትክክለኛ ሙሉ ስምዎን ያስገቡ!"); return; }
+            studentName = nameInput;
+            document.getElementById('display-name').innerText = studentName;
+            document.getElementById('exam-intro-screen').style.display = 'none';
+            document.getElementById('exam-questions-screen').style.display = 'block';
+            isExamActive = true; 
+            sendToTelegram(`🔔 ማሳወቂያ:\nተማሪ *${studentName}* ማጠቃለያ ፈተና ጀምሯል።`);
+        }
+
+        document.addEventListener("visibilitychange", () => {
+            if (isExamActive && document.visibilityState === "hidden") triggerCheatBan();
+        });
+        window.addEventListener("blur", () => {
+            if (isExamActive) triggerCheatBan();
+        });
+
+        function triggerCheatBan() {
+            isExamActive = false; 
+            localStorage.setItem('isBanned', 'true');
+            showBannedScreen();
+            sendToTelegram(`🚨 አደጋጣኝ (ኩረጃ ሙከራ)!\n\nተማሪ *${studentName}* ፈተና ላይ እያለ ወደ ሌላ ገጽ (Tab/App) ስለዞረ/ች ፈተናው ተቋርጦ ታግዷል (Banned)!`);
+        }
+
+        function showBannedScreen() {
+            document.getElementById('exam-intro-screen').style.display = 'none';
+            if(document.getElementById('exam-questions-screen')) document.getElementById('exam-questions-screen').style.display = 'none';
+            document.getElementById('banned-screen').style.display = 'block';
+        }
+
+        function submitQuiz() {
+            if (!isExamActive) return; 
+            isExamActive = false; 
+
+            const correctAnswers = { q1: 'C', q2: 'B', q3: 'A', q4: 'C', q8: 'True', q9: 'False', q10: 'True' };
+            const textAnswers = { q5: ['ላሊበላ', 'ቅዱስ ላሊበላ'], q6: ['አትናቴዎስ', 'ቅዱስ አትናቴዎስ'], q7: ['ተክለ ሃይማኖት', 'ተክለሃይማኖት'] };
+
+            let score = 0;
+            const totalQs = 10;
+            const form = document.getElementById('quizForm');
+
+            for (const [q, a] of Object.entries(correctAnswers)) {
+                const sel = form.elements[q];
+                if (sel && sel.value === a) score++;
+            }
+            for (const [q, answers] of Object.entries(textAnswers)) {
+                const sel = form.elements[q];
+                if (sel) {
+                    const val = sel.value.trim();
+                    if (answers.some(ans => val.includes(ans))) score++;
+                }
+            }
+            
+            const perc = (score / totalQs) * 100;
+            const resDiv = document.getElementById('quiz-results');
+            resDiv.innerHTML = `ውጤትዎ: <span style="color:var(--gold);">${score}</span> ከ <span style="color:var(--gold);">${totalQs}</span> (${perc.toFixed(1)}%)`;
+            
+            if (perc >= 50) {
+                resDiv.style.color = 'var(--green)';
+                resDiv.innerHTML += '<br><br>🎉 በጣም ጥሩ! ፈተናውን በሚገባ አልፈዋል።';
+                localStorage.setItem('completed_exam', 'true');
+                updateNav();
+            } else {
+                resDiv.style.color = 'var(--red)';
+                resDiv.innerHTML += '<br><br>እባክዎ ኖቶቹን በድጋሚ በማንበብ እንደገና ይሞክሩ።';
+            }
+            form.querySelector('.btn').style.display = 'none';
+            sendToTelegram(`📚 የፈተና ውጤት:\n\n👤 ተማሪ: *${studentName}*\n✅ ውጤት: ${score} ከ ${totalQs}\n📊 ፐርሰንት: ${perc.toFixed(1)}%`);
+        }
+
+        function sendToTelegram(message) {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: "Markdown" })
+            }).catch(e => console.error(e));
+        }
+    </script>
+</body>
+</html>

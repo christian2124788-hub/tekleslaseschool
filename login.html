@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="am">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ተክለሥላሴ | መግቢያ</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            :root {
+                --gold: #d4af37;
+                --navy: #0a192f;
+                --light-navy: #112240;
+                --lightest-navy: #233554;
+                --white: #e6f1ff;
+                --slate: #8892b0;
+                --red: #ff4d4d;
+                --transition: all 0.3s ease;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Inter", "Abyssinica SIL", sans-serif;
+            }
+            body {
+                background-color: var(--navy);
+                color: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                padding: 20px;
+            }
+            .form-container {
+                width: 100%;
+                max-width: 450px;
+                background: var(--light-navy);
+                padding: 40px;
+                border-radius: 25px;
+                border: 1px solid rgba(212, 175, 55, 0.2);
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+                transform: scale(0.95);
+                opacity: 0;
+                animation: fadeInScale 0.6s forwards
+                    cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            @keyframes fadeInScale {
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+            .form-header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .form-header i {
+                font-size: 3.5rem;
+                color: var(--gold);
+                margin-bottom: 15px;
+            }
+            .form-header h2 {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            .form-group {
+                margin-bottom: 20px;
+                position: relative;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                color: var(--slate);
+            }
+            .form-group input {
+                width: 100%;
+                padding: 15px;
+                background: var(--navy);
+                border: 1px solid var(--lightest-navy);
+                border-radius: 12px;
+                color: white;
+                font-size: 1rem;
+                transition: var(--transition);
+            }
+            .form-group input:focus {
+                border-color: var(--gold);
+                outline: none;
+                box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            }
+            .submit-btn {
+                width: 100%;
+                padding: 18px;
+                background: var(--gold);
+                color: var(--navy);
+                border: none;
+                border-radius: 12px;
+                font-weight: 800;
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: var(--transition);
+            }
+            .submit-btn:hover {
+                background: #e5be45;
+                transform: translateY(-2px);
+            }
+            .link-text {
+                text-align: center;
+                margin-top: 25px;
+                font-size: 0.95rem;
+                color: var(--slate);
+            }
+            .link-text a {
+                color: var(--gold);
+                text-decoration: none;
+                font-weight: 600;
+            }
+            .link-text a:hover {
+                text-decoration: underline;
+            }
+            #errorMsg {
+                color: var(--red);
+                text-align: center;
+                margin-bottom: 15px;
+                background-color: rgba(255, 77, 77, 0.1);
+                padding: 10px;
+                border-radius: 8px;
+                border: 1px solid var(--red);
+                display: none; /* Initially hidden */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="form-container">
+            <div class="form-header">
+                <i class="fas fa-sign-in-alt"></i>
+                <h2>ወደ መማሪያ ክፍል ይግቡ</h2>
+            </div>
+            <div id="errorMsg"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="cname">የክርስትና ስም</label>
+                    <input type="text" id="cname" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">የይለፍ ቃል</label>
+                    <input type="password" id="password" required />
+                </div>
+                <button type="submit" class="submit-btn">ግባ</button>
+            </form>
+            <div class="link-text">
+                <p>እስካሁን አልተመዘገቡም? <a href="home.html">እዚህ ይመዝገቡ</a></p>
+            </div>
+        </div>
+        <script>
+            // Redirect if already logged in (user opened a new tab in the same session)
+            if (sessionStorage.getItem("logged_in_user")) {
+                window.location.href = "learn.html";
+            }
+
+            document
+                .getElementById("loginForm")
+                .addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const cnameInput = document
+                        .getElementById("cname")
+                        .value.trim();
+                    const passwordInput =
+                        document.getElementById("password").value;
+                    const errorMsg = document.getElementById("errorMsg");
+                    errorMsg.style.display = "none"; // Hide error on new attempt
+
+                    // In a real app, this would be an API call. Here we check localStorage.
+                    const storedPassword = localStorage.getItem(
+                        `student_password_${cnameInput}`,
+                    );
+
+                    if (storedPassword && storedPassword === passwordInput) {
+                        // SUCCESSFUL LOGIN
+
+                        // 1. Set a session storage item to remember login for this session only
+                        sessionStorage.setItem("logged_in_user", cnameInput);
+
+                        // 2. Retrieve the full name associated with this cname
+                        const fullName = localStorage.getItem(
+                            `student_name_${cnameInput}`,
+                        );
+
+                        // 3. Set the current user's details for the learning page to use
+                        localStorage.setItem("student_name", fullName);
+                        localStorage.setItem("student_cname", cnameInput);
+
+                        // 4. Redirect to the learning page
+                        window.location.href = "learn.html";
+                    } else {
+                        // FAILED LOGIN
+                        errorMsg.textContent =
+                            "የክርስትና ስም ወይም የይለፍ ቃል የተሳሳተ ነው!";
+                        errorMsg.style.display = "block";
+                    }
+                });
+        </script>
+    </body>
+</html>
